@@ -7,10 +7,10 @@
   action:
     # Phone Notification
     # REPLACE 'notify.mobile_app_REPLACE_ME' with your actual device ID
-    - action: notify.mobile_app_REPLACE_ME
+    - action: notify.REPLACE_WITH_YOUR_DEVICE_ID
       data:
         title: "🚀 Pi Firmware Update Available"
-        message: "A new bootloader is ready.\n\n**Current:** {{ state_attr('sensor.pi_firmware_monitor', 'current_version') }}\n**Latest:** {{ state_attr('sensor.pi_firmware_monitor', 'latest_version') }}"
+        message: "A new Pi Firmware Update is ready.\n\n**Current:** {{ state_attr('sensor.pi_firmware_monitor', 'current_version') }}\n**Latest:** {{ state_attr('sensor.pi_firmware_monitor', 'latest_version') }}"
         data:
           tag: "pi_update"
           actions:
@@ -22,5 +22,5 @@
     - action: persistent_notification.create
       data:
         title: "🚀 Pi Firmware Update"
-        message: "A new bootloader is ready.\n\n**Installed:** `{{ state_attr('sensor.pi_firmware_monitor', 'current_version') }}`\n**Latest:** `{{ state_attr('sensor.pi_firmware_monitor', 'latest_version') }}`\n\n[Install & Reboot](/config/script/edit/apply_pi_firmware_update_script)"
+        message: "A new Pi Firmware Update is ready.\n\n**Installed:** `{{ state_attr('sensor.pi_firmware_monitor', 'current_version') }}`\n**Latest:** `{{ state_attr('sensor.pi_firmware_monitor', 'latest_version') }}`\n\n[Install & Reboot](/config/script/edit/apply_pi_firmware_update_script)"
         notification_id: "pi_firmware_alert"
