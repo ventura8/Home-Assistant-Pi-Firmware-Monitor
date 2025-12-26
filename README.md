@@ -13,7 +13,7 @@ This project provides a robust, professional-grade solution for monitoring and u
 ## **📋 Prerequisites**
 
 * \[ \] **Hardware:** Raspberry Pi 4 or 5\.  
-* \[ \] **Software:** Home Assistant OS (HAOS) installed (Tested on **HAOS 2025.12.4**).  
+* \[ \] **Software:** Home Assistant OS (HAOS) installed (Tested on **Home Assistant OS 2025.12.4**).  
 * \[ \] **Add-ons:**  
   1. **Advanced SSH & Web Terminal** (Community Add-ons) \- Required for setup commands.  
   2. **HassOS SSH Port Configurator** \- Required to open Port 22222 on the host.  
@@ -37,11 +37,6 @@ Standard SSH add-ons in HAOS are sandboxed and cannot access the firmware. You m
 1. Install the [**HassOS SSH port 22222 Configurator**](https://github.com/adamoutler/HassOSConfigurator) add-on.  
 2. In the add-on configuration, set a password or paste a public key.  
 3. Start the add-on. This will open Port 22222 on the physical hardware.  
-4. **Verification:** Open the terminal you installed in Step 0 and verify access:
-
-```bash
-ssh -p 22222 root@127.0.0.1
-```
 
 If you see the HassOS CLI welcome screen, you have successfully bridged to the hardware.
 
@@ -82,11 +77,19 @@ ssh -p 22222 -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no root@127.0.0.1 '
 
 ## **📂 Step 3: File Configuration**
 
-Add the following files to your `/config/` directory.
+### **Option A: HACS (Recommended)**
 
-### **1\. `configuration.yaml`**
+1. In HACS, go to **Integrations** \> **Custom Repositories**.  
+2. Add this GitHub URL and select **Integration** as the category.  
+3. Install the integration. HACS will automatically place the files in `/config/custom_components/pi_firmware_monitor/`.
 
-Link the files together using the specific filenames:  
+### **Option B: Manual Installation**
+
+If not using HACS, manually create the directory and move all `.yaml` files from this repository into: `/config/custom_components/pi_firmware_monitor/`.
+
+### **1\. Update `configuration.yaml`**
+
+Regardless of installation method, add these lines to your main config file to register the components:
 
 ```yaml
 shell_command: !include custom_components/pi_firmware_monitor/shell_commands.yaml
@@ -98,7 +101,18 @@ automation:
 script: !include custom_components/pi_firmware_monitor/apply_pi_firmware_update_script.yaml
 ```
 
-### **2\. `shell_commands.yaml`**
+## **📱 Step 4: Find Your Mobile Device ID**
+
+Actionable notifications need your specific device ID.
+
+1. Go to **Developer Tools** \> **Actions**.  
+2. Search for `notify.mobile_app_`.  
+3. Note your device ID (e.g., `notify.mobile_app_pixel_9_pro`).  
+4. Replace `REPLACE_WITH_YOUR_DEVICE_ID` in `update_notification.yaml` and `action_handler.yaml` with this ID.
+
+## **🤖 Automations Details**
+
+### **1\. `shell_commands.yaml`**
 
 ```yaml
 # Grabs only relevant lines to stay under 255-character sensor limit  
@@ -108,7 +122,7 @@ update_pi_firmware_data: "ssh -p 22222 -o StrictHostKeyChecking=no -i /config/.s
 apply_pi_firmware_update: "ssh -p 22222 -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa root@127.0.0.1 'rpi-eeprom-update -a && reboot'"
 ```
 
-### **3\. `command_line_sensors.yaml`**
+### **2\. `command_line_sensors.yaml`**
 
 ```yaml
 - sensor:  
@@ -119,7 +133,7 @@ apply_pi_firmware_update: "ssh -p 22222 -o StrictHostKeyChecking=no -i /config/.
     scan_interval: 86400
 ```
 
-### **4\. `template_sensors.yaml`**
+### **3\. `template_sensors.yaml`**
 
 ```yaml
 - sensor:  
@@ -140,18 +154,7 @@ apply_pi_firmware_update: "ssh -p 22222 -o StrictHostKeyChecking=no -i /config/.
           {{ raw.split('LATEST:')[1].split('RELEASE:')[0].strip() if 'LATEST:' in raw else 'Not Found' }}
 ```
 
-## **📱 Step 4: Find Your Mobile Device ID**
-
-Actionable notifications need your specific device ID.
-
-1. Go to **Developer Tools** \> **Actions**.  
-2. Search for `notify.mobile_app_`.  
-3. Note your device ID (e.g., `notify.mobile_app_pixel_9_pro`).  
-4. Replace `REPLACE_WITH_YOUR_DEVICE_ID` in `update_notification.yaml` and `action_handler.yaml` with this ID.
-
-## **🤖 Step 5: Automations**
-
-### **1\. Notification Automation (`update_notification.yaml`)**
+### **4\. Notification Automation (`update_notification.yaml`)**
 
 Triggers when a version mismatch is detected.
 
@@ -180,7 +183,7 @@ Triggers when a version mismatch is detected.
         notification_id: "pi_firmware_alert"
 ```
 
-### **2\. Action Handler (`action_handler.yaml`)**
+### **5\. Action Handler (`action_handler.yaml`)**
 
 Responds to the "Install & Reboot" button on your phone.
 
