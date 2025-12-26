@@ -1,4 +1,4 @@
-# **🚀 Raspberry Pi Firmware Monitor & Updater for Home Assistant**
+# **🚀 Raspberry Pi Firmware Updater for Home Assistant**
 
 This project provides a robust, professional-grade solution for monitoring and updating Raspberry Pi Bootloader (EEPROM) firmware directly from Home Assistant. It features actionable mobile notifications, persistent dashboard alerts, and a bypass for the Home Assistant 255-character sensor state limit.
 
