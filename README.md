@@ -17,7 +17,7 @@ This project provides a robust, professional-grade solution for monitoring and u
 * \[ \] **Add-ons:**  
   1. **Advanced SSH & Web Terminal** (Community Add-ons) \- Required for setup commands.  
   2. **HassOS SSH Port Configurator** \- Required to open Port 22222 on the host.  
-* \[ \] **Mobile App:** Home Assistant Companion app on your mobile device.
+* \[ \] **Mobile App (Optional):** Home Assistant Companion app on your mobile device.
 
 ## **🛠️ Step 0: Install the Terminal Add-on**
 
