@@ -84,7 +84,7 @@ ssh -p 22222 -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no root@127.0.0.1 '
 
 Add the following files to your `/config/` directory.
 
-### **1\. configuration.yaml**
+### **1\. `configuration.yaml`**
 
 Link the files together using the specific filenames:  
 
