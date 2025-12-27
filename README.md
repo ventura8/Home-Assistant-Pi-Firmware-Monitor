@@ -83,24 +83,24 @@ ssh -p 22222 -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no root@127.0.0.1 '
 
 1. In HACS, go to **Integrations** \> **Custom Repositories**.  
 2. Add this GitHub URL and select **Integration** as the category.  
-3. Install the integration. HACS will automatically place the files in `/config/custom_components/pi_firmware_monitor/`.
+3. Install the integration. HACS will automatically place the files in `/config/custom_components/pi_firmware_updater/`.
 
 ### **Option B: Manual Installation**
 
-If not using HACS, manually create the directory and move all `.yaml` files from this repository into: `/config/custom_components/pi_firmware_monitor/`.
+If not using HACS, manually create the directory and move all `.yaml` files from this repository into: `/config/custom_components/pi_firmware_updater/`.
 
 ### **1\. Update `configuration.yaml`**
 
 Regardless of installation method, add these lines to your main config file to register the components:
 
 ```yaml
-shell_command: !include custom_components/pi_firmware_monitor/shell_commands.yaml
-command_line: !include custom_components/pi_firmware_monitor/command_line_sensors.yaml
-template: !include custom_components/pi_firmware_monitor/template_sensors.yaml
+shell_command: !include custom_components/pi_firmware_updater/shell_commands.yaml
+command_line: !include custom_components/pi_firmware_updater/command_line_sensors.yaml
+template: !include custom_components/pi_firmware_updater/template_sensors.yaml
 automation:
-  - !include custom_components/pi_firmware_monitor/update_notification.yaml
-  - !include custom_components/pi_firmware_monitor/action_handler.yaml
-script: !include custom_components/pi_firmware_monitor/apply_pi_firmware_update_script.yaml
+  - !include custom_components/pi_firmware_updater/update_notification.yaml
+  - !include custom_components/pi_firmware_updater/action_handler.yaml
+script: !include custom_components/pi_firmware_updater/apply_pi_firmware_update_script.yaml
 ```
 
 ## **📱 Step 4: Find Your Mobile Device ID**

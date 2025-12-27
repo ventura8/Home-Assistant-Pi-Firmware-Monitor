@@ -1,5 +1,5 @@
 {
-  "domain": "pi_firmware_monitor",
+  "domain": "pi_firmware_updater",
   "name": "Raspberry Pi Firmware Monitor",
   "documentation": "https://github.com/ventura8/Home-Assistant-Pi-Firmware-Updater",
   "issue_tracker": "https://github.com/ventura8/Home-Assistant-Pi-Firmware-Updater/issues",
